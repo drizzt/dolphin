@@ -32,6 +32,7 @@
 #define RETRO_DEVICE_WIIMOTE_NC ((3 << 8) | RETRO_DEVICE_JOYPAD)
 #define RETRO_DEVICE_WIIMOTE_CC ((4 << 8) | RETRO_DEVICE_JOYPAD)
 #define RETRO_DEVICE_WIIMOTE_CC_PRO ((5 << 8) | RETRO_DEVICE_JOYPAD)
+#define RETRO_DEVICE_REAL_WIIMOTE ((6 << 8) | RETRO_DEVICE_NONE)
 
 namespace Libretro
 {
@@ -42,6 +43,8 @@ static retro_input_poll_t poll_cb;
 static retro_input_state_t input_cb;
 struct retro_rumble_interface rumble;
 static const std::string source = "Libretro";
+
+static struct retro_input_descriptor descEmpty[] = {{0}};
 
 static struct retro_input_descriptor descGC[] = {
     {0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_LEFT, "Left"},
@@ -388,6 +391,7 @@ void Init()
         {"WiiMote + Nunchuk", RETRO_DEVICE_WIIMOTE_NC},
         {"WiiMote + Classic Controller", RETRO_DEVICE_WIIMOTE_CC},
         {"WiiMote + Classic Controller Pro", RETRO_DEVICE_WIIMOTE_CC_PRO},
+        {"Real WiiMote", RETRO_DEVICE_REAL_WIIMOTE},
     };
 
     static const struct retro_controller_info ports[] = {
@@ -548,7 +552,7 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
       ccRightStick->SetControlExpression(2, "`" + devAnalog + ":X1-`");     // Left
       ccRightStick->SetControlExpression(3, "`" + devAnalog + ":X1+`");     // Right
     }
-    else
+    else if (device != RETRO_DEVICE_REAL_WIIMOTE)
     {
       ControllerEmu::ControlGroup* wmButtons = wm->GetWiimoteGroup(WiimoteGroup::Buttons);
       ControllerEmu::ControlGroup* wmDPad = wm->GetWiimoteGroup(WiimoteGroup::DPad);
@@ -657,6 +661,11 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
       desc = Libretro::Input::descWiimoteCC;
       wmExtension->switch_extension = EXT_CLASSIC;
       WiimoteReal::ChangeWiimoteSource(port, WIIMOTE_SRC_EMU);
+      break;
+
+    case RETRO_DEVICE_REAL_WIIMOTE:
+      desc = Libretro::Input::descEmpty;
+      WiimoteReal::ChangeWiimoteSource(port, WIIMOTE_SRC_REAL);
       break;
 
     default:
