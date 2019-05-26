@@ -189,5 +189,7 @@ Option<bool> gpuTextureDecoding("dolphin_gpu_texture_decoding", "GPU Texture Dec
 Option<bool> waitForShaders("dolphin_wait_for_shaders", "Wait for Shaders before Starting", false);
 Option<bool> forceTextureFiltering("dolphin_force_texture_filtering", "Force Texture Filtering", false);
 Option<bool> loadCustomTextures("dolphin_load_custom_textures", "Load Custom Textures", false);
+Option<int> textureCacheAccuracy("dolphin_texture_cache_accuracy", "Texture Cache Accuracy",
+                                 {{"Fast", 128}, {"Middle", 512}, {"Safe", 0}});
 }  // namespace Options
 }  // namespace Libretro

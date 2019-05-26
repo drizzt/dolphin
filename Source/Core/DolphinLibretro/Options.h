@@ -115,5 +115,6 @@ extern Option<bool> waitForShaders;
 extern Option<bool> forceTextureFiltering;
 extern Option<bool> loadCustomTextures;
 extern Option<bool> WiimoteContinuousScanning;
+extern Option<int> textureCacheAccuracy;
 }  // namespace Options
 }  // namespace Libretro
