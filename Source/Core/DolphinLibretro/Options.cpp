@@ -142,7 +142,7 @@ Option<float> cpuClockRate("dolphin_cpu_clock_rate", "CPU Clock Rate",
                             {"80%", 0.8},
                             {"90%", 0.9}});
 Option<std::string> renderer("dolphin_renderer", "Renderer", {"Hardware", "Software", "Null"});
-Option<bool> fastmem("dolphin_fastmem", "Fastmem", true);
+Option<bool> fastmem("dolphin_fastmem", "Fastmem", false);
 Option<bool> DSPHLE("dolphin_dsp_hle", "DSP HLE", true);
 Option<bool> DSPEnableJIT("dolphin_dsp_jit", "DSP Enable JIT", true);
 Option<PowerPC::CPUCore> cpu_core("dolphin_cpu_core", "CPU Core",
